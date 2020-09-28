@@ -7,3 +7,5 @@ env
 db.sqlite3
 /static
 .DS_Store
+CCTV/yolov3.weights
+yolov3.weights
