@@ -32,3 +32,6 @@ Final Year Project for Bennett University
                             Path of image to detect objects
       --verbose VERBOSE     To print statements
     ```
+5. Model.ipynb is included in this repository, the other links are as follows:
+    - Trained Model Download: https://drive.google.com/drive/folders/11miO3Dgo826hWEVEXoykNKFce0UD0K8U?usp=sharing
+    - Dataset Download:
