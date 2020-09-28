@@ -14,3 +14,21 @@ Final Year Project for Bennett University
         ```
         python yolo.py --play_video True --video_path videos/fire1.mp4
         ```
+4. Command usage
+    ```
+    usage: yolo.py [-h] [--webcam WEBCAM] [--play_video PLAY_VIDEO]
+               [--image IMAGE] [--video_path VIDEO_PATH]
+               [--image_path IMAGE_PATH] [--verbose VERBOSE]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --webcam WEBCAM       True/False
+      --play_video PLAY_VIDEO
+                            Tue/False
+      --image IMAGE         Tue/False
+      --video_path VIDEO_PATH
+                            Path of video file
+      --image_path IMAGE_PATH
+                            Path of image to detect objects
+      --verbose VERBOSE     To print statements
+    ```
