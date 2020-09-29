@@ -16,21 +16,15 @@ Final Year Project for Bennett University
         ```
 4. Command usage
     ```
-    usage: yolo.py [-h] [--webcam WEBCAM] [--play_video PLAY_VIDEO]
-               [--image IMAGE] [--video_path VIDEO_PATH]
-               [--image_path IMAGE_PATH] [--verbose VERBOSE]
-
+    python detect.py 
     optional arguments:
-      -h, --help            show this help message and exit
-      --webcam WEBCAM       True/False
+      -h, --help            
+      --webcam WEBCAM       
       --play_video PLAY_VIDEO
-                            Tue/False
-      --image IMAGE         Tue/False
+      --image IMAGE        
       --video_path VIDEO_PATH
-                            Path of video file
       --image_path IMAGE_PATH
-                            Path of image to detect objects
-      --verbose VERBOSE     To print statements
+  
     ```
 5. Model.ipynb is included in this repository, the other links are as follows:
     - Trained Model Download: https://drive.google.com/drive/folders/11miO3Dgo826hWEVEXoykNKFce0UD0K8U?usp=sharing
