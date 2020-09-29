@@ -12,7 +12,7 @@ Final Year Project for Bennett University
     - Change to CCTV folder
     - Run the following command to run the tutorial
         ```
-        python yolo.py --play_video True --video_path videos/fire1.mp4
+        python detect.py --play_video True --video_path demo-video/demo.mp4
         ```
 4. Command usage
     ```
