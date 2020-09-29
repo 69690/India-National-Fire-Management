@@ -16,7 +16,8 @@ Final Year Project for Bennett University
         ```
 4. Command usage
     ```
-    python detect.py 
+    python detect.py [optional arguments]
+   
     optional arguments:
       -h, --help            
       --webcam WEBCAM       
