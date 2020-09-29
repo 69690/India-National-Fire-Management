@@ -352,7 +352,7 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img, cctv_id):
                     total_sec = time_delta.total_seconds()
                     total_min = total_sec/60
 
-                    if total_min > 10:
+                    if total_min > 10 and obj.cctv_id == cctv_id:
                         temp_obj = FireDetect(cctv_id, now, current_time)
                         f = open('__init__/cache.dat','ab')
                         pickle.dump(temp_obj, f)
