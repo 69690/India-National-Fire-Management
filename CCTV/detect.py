@@ -5,10 +5,10 @@ import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--webcam', help="True/False", default=False)
-parser.add_argument('--play_video', help="Tue/False", default=False)
-parser.add_argument('--image', help="Tue/False", default=False)
-parser.add_argument('--video_path', help="Path of video file", default="videos/fire1.mp4")
-parser.add_argument('--image_path', help="Path of image to detect objects", default="Images/bicycle.jpg")
+parser.add_argument('--show_demo', help="True/False", default=False)
+parser.add_argument('--image', help="True/False", default=False)
+parser.add_argument('--videopath', help="Path of video file", default="demo-video/demo.mp4")
+parser.add_argument('--imagepath', help="Path of image to detect objects")
 parser.add_argument('--verbose', help="To print statements", default=True)
 args = parser.parse_args()
 
@@ -345,22 +345,22 @@ def start_video(video_path):
 
 if __name__ == '__main__':
 	webcam = args.webcam
-	video_play = args.play_video
+	video_play = args.show_demo
 	image = args.image
 	if webcam:
 		if args.verbose:
 			print('---- Starting Web Cam object detection ----')
 		webcam_detect()
 	if video_play:
-		video_path = args.video_path
+		videopath = args.videopath
 		if args.verbose:
-			print('Opening '+video_path+" .... ")
-		start_video(video_path)
+			print('Opening '+videopath+" .... ")
+		start_video(videopath)
 	if image:
 		image_path = args.image_path
 		if args.verbose:
-			print("Opening "+image_path+" .... ")
-		image_detect(image_path)
+			print("Opening "+imagepath+" .... ")
+		image_detect(imagepath)
 	
 
 	cv2.destroyAllWindows()
