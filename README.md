@@ -10,21 +10,13 @@ Final Year Project for Bennett University
     - Place it in the CCTV folder
 3. Go to terminal and run the python script yolo.py in CCTV folder
     - Change to CCTV folder
-    - Run the following command to run the tutorial
-        ```
-        python detect.py --play_video True --video_path demo-video/demo.mp4
-        ```
 4. Command usage
     ```
-    python detect.py [optional arguments]
-   
-    optional arguments:
-      -h, --help            
-      --webcam WEBCAM       
-      --play_video PLAY_VIDEO
-      --image IMAGE        
-      --video_path VIDEO_PATH
-      --image_path IMAGE_PATH
+    python detect.py --webcam WEBCAM
+    python detect.py --show_demo demo_path
+    python detect.py --image img
+    python detect.py --videopath <path>
+    python detect.py --imagepath <path>
   
     ```
 5. Model.ipynb is included in this repository, the other links are as follows:
