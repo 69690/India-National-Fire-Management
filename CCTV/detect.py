@@ -10,8 +10,16 @@ parser.add_argument('--image', help="True/False", default=False)
 parser.add_argument('--videopath', help="Path of video file", default="demo-video/demo.mp4")
 parser.add_argument('--imagepath', help="Path of image to detect objects")
 parser.add_argument('--verbose', help="To print statements", default=True)
+parser.add_argument('--cctv', help="ID of cctv camera to use", default=1)
 args = parser.parse_args()
 
+cctvs = {
+    '1': {
+        'location': 'G. Noida',
+        'lat': '1',
+        'long': '1'
+    }
+}
 
 def imShow_s(path):
   import cv2
@@ -312,19 +320,21 @@ def image_detect(img_path):
 		if key == 27:
 			break
 
-def webcam_detect():
-	model, classes, colors, output_layers = load_yolo()
-	cap = start_webcam()
-	while True:
-		_, frame = cap.read()
-		height, width, channels = frame.shape
-		blob, outputs = detect_objects(frame, model, output_layers)
-		boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
-		draw_labels(boxes, confs, colors, class_ids, classes, frame)
-		key = cv2.waitKey(1)
-		if key == 27:
-			break
-	cap.release()
+def webcam_detect(cctv_id):
+    print(cctv_id)
+    print(cctvs[cctv_id]['location'])
+    model, classes, colors, output_layers = load_yolo()
+    cap = start_webcam()
+    while True:
+        _, frame = cap.read()
+        height, width, channels = frame.shape
+        blob, outputs = detect_objects(frame, model, output_layers)
+        boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
+        draw_labels(boxes, confs, colors, class_ids, classes, frame)
+        key = cv2.waitKey(1)
+        if key == 27:
+            break
+    cap.release()
 
 
 def start_video(video_path):
@@ -344,23 +354,23 @@ def start_video(video_path):
 	cap.release()
 
 if __name__ == '__main__':
-	webcam = args.webcam
-	video_play = args.show_demo
-	image = args.image
-	if webcam:
-		if args.verbose:
-			print('---- Starting Web Cam object detection ----')
-		webcam_detect()
-	if video_play:
-		videopath = args.videopath
-		if args.verbose:
-			print('Opening '+videopath+" .... ")
-		start_video(videopath)
-	if image:
-		image_path = args.image_path
-		if args.verbose:
-			print("Opening "+imagepath+" .... ")
-		image_detect(imagepath)
+    webcam = args.webcam
+    video_play = args.show_demo
+    image = args.image
+    if webcam:
+        cctv_id = args.cctv
+        if args.verbose:
+            print('---- Starting Web Cam object detection ----')
+            webcam_detect(cctv_id)
+    if video_play:
+        videopath = args.videopath
+        if args.verbose:
+            print('Opening '+videopath+" .... ")
+        start_video(videopath)
+    if image:
+        image_path = args.image_path
+        if args.verbose:
+            print("Opening "+imagepath+" .... ")
+        image_detect(imagepath)
 	
-
-	cv2.destroyAllWindows()
+    cv2.destroyAllWindows()
