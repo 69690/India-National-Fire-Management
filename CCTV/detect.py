@@ -2,6 +2,8 @@ import cv2
 import numpy as np 
 import argparse
 import time
+from datetime import datetime
+import pickle
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--webcam', help="True/False", default=False)
@@ -295,8 +297,8 @@ def get_box_dimensions(outputs, height, width):
 				confs.append(float(conf))
 				class_ids.append(class_id)
 	return boxes, confs, class_ids
-			
-def draw_labels(boxes, confs, colors, class_ids, classes, img): 
+
+def draw_labels_v(boxes, confs, colors, class_ids, classes, img): 
 	indexes = cv2.dnn.NMSBoxes(boxes, confs, 0.5, 0.4)
 	font = cv2.FONT_HERSHEY_PLAIN
 	for i in range(len(boxes)):
@@ -309,12 +311,72 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img):
 	img=cv2.resize(img, (800,600))
 	cv2.imshow("Image", img)
 
+class FireDetect:
+    def __init__(self, cctv_id, date, time):
+        f = open('__init__/ids.txt','r')
+        st = f.read()
+        f.close()
+        self.id = int(st)+1
+        self.cctv_id = cctv_id
+        self.location = cctvs[cctv_id]['location']
+        self.date = date
+        self.time = time 
+        f = open('__init__/ids.txt','w')
+        f.write(str(self.id))
+        f.close()
+
+def draw_labels(boxes, confs, colors, class_ids, classes, img, cctv_id): 
+	indexes = cv2.dnn.NMSBoxes(boxes, confs, 0.5, 0.4)
+	font = cv2.FONT_HERSHEY_PLAIN
+	for i in range(len(boxes)):
+            if i in indexes:
+                x, y, w, h = boxes[i]
+                label = str(classes[class_ids[i]])
+                color = colors[i]
+                cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
+                cv2.putText(img, label, (x, y - 5), font, 1, color, 1)
+                
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                try:
+                    f = open('__init__/cache.dat','rb')
+                    try:
+                        obj = pickle.load(f)
+                        while True:
+                            obj = pickle.load(f)
+                    except EOFError:
+                        pass
+                    f.close()
+
+                    time_delta = now - obj.date
+                    total_sec = time_delta.total_seconds()
+                    total_min = total_sec/60
+
+                    if total_min > 10:
+                        temp_obj = FireDetect(cctv_id, now, current_time)
+                        f = open('__init__/cache.dat','ab')
+                        pickle.dump(temp_obj, f)
+                        f.close()
+                    else:
+                        pass
+                except FileNotFoundError:
+                    temp_obj = FireDetect(cctv_id, now, current_time)
+                    f = open('__init__/cache.dat','ab')
+                    pickle.dump(temp_obj, f)
+                    # f.write(cctvs[cctv_id]['location']+' | '+'\n')
+                    # f.write(str(now)+' | '+'\n')
+                    # f.write(str(current_time)+' | '+'\n')
+                    f.close()
+
+	img=cv2.resize(img, (800,600))
+	cv2.imshow("Image", img)
+
 def image_detect(img_path): 
 	model, classes, colors, output_layers = load_yolo()
 	image, height, width, channels = load_image(img_path)
 	blob, outputs = detect_objects(image, model, output_layers)
 	boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
-	draw_labels(boxes, confs, colors, class_ids, classes, image)
+	draw_labels_v(boxes, confs, colors, class_ids, classes, image)
 	while True:
 		key = cv2.waitKey(1)
 		if key == 27:
@@ -330,7 +392,7 @@ def webcam_detect(cctv_id):
         height, width, channels = frame.shape
         blob, outputs = detect_objects(frame, model, output_layers)
         boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
-        draw_labels(boxes, confs, colors, class_ids, classes, frame)
+        draw_labels(boxes, confs, colors, class_ids, classes, frame, cctv_id)
         key = cv2.waitKey(1)
         if key == 27:
             break
@@ -346,7 +408,7 @@ def start_video(video_path):
 		height, width, channels = frame.shape
 		blob, outputs = detect_objects(frame, model, output_layers)
 		boxes, confs, class_ids = get_box_dimensions(outputs, height, width)
-		draw_labels(boxes, confs, colors, class_ids, classes, frame)
+		draw_labels_v(boxes, confs, colors, class_ids, classes, frame)
 
 		key = cv2.waitKey(1)
 		if cv2.waitKey(1) & 0xFF ==ord('q'):
