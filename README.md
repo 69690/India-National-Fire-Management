@@ -17,7 +17,6 @@ Final Year Project for Bennett University
     python detect.py --image img
     python detect.py --videopath <path>
     python detect.py --imagepath <path>
-  
     ```
 5. Model.ipynb is included in this repository, the other links are as follows:
     - Trained Model Download: https://drive.google.com/drive/folders/11miO3Dgo826hWEVEXoykNKFce0UD0K8U?usp=sharing
