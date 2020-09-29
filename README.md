@@ -12,7 +12,7 @@ Final Year Project for Bennett University
     - Change to CCTV folder
 4. Command usage
     ```
-    python detect.py --webcam WEBCAM
+    python detect.py --webcam w --cctv <CCTV_ID>
     python detect.py --show_demo demo_path
     python detect.py --image img
     python detect.py --videopath <path>
