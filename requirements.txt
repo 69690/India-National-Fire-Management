@@ -1,12 +1,15 @@
-asgiref==3.2.10           # via django
-click==7.1.2              # via flask
-django==3.1.1             # via -r requirements.txt
-flask==1.1.2              # via -r requirements.txt
-itsdangerous==1.1.0       # via flask
-jinja2==2.11.2            # via flask
-markupsafe==1.1.1         # via jinja2
-numpy==1.19.2             # via -r requirements.txt, opencv-python
-opencv-python==4.4.0.44   # via -r requirements.txt
-pytz==2020.1              # via django
-sqlparse==0.3.1           # via django
-werkzeug==1.0.1           # via flask
+asgiref==3.2.10
+click==7.1.2
+Django==3.1.1
+Flask==1.1.2
+imutils==0.5.3
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+numpy==1.19.2
+opencv-python-headless==4.4.0.44
+pip-tools==5.3.1
+pytz==2020.1
+six==1.15.0
+sqlparse==0.3.1
+Werkzeug==1.0.1
