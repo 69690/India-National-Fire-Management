@@ -101,20 +101,18 @@ def checkSetup_s():
       
 
 def alertfun_s(msg):#alert on camera fail or disconnection
-    li = ["m.phanisai007@gmail.com",
-          "santhoshyadav09@gmail.com",
-          "help.eceprojects@gmail.com"]
+    li = ["bharahuja619@gmail.com"]
     #li is list of mail Id that gets alerts
     for i in range(len(li)): # iterate through all mail Ids
         s = smtplib.SMTP('smtp.gmail.com', 587) 
         s.starttls() 
-        s.login("help.eceprojects@gmail.com", "vidyajyothi@03")
+        s.login("firedetectproject@gmail.com", "firedetect@123")
         #logins to a mailId (admin) to send mail
         
         sub="CCTV Alert !" #subject
         message = 'Subject: {}\n\n{}'.format(sub, msg)
         print(message)
-        s.sendmail("help.eceprojects@gmail.com", li[i], message)
+        s.sendmail("firedetectproject@gmail.com", li[i], message)
         s.quit()
 
 def camConnCheck_s():
