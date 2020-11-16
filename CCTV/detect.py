@@ -4,6 +4,17 @@ import argparse
 import time
 from datetime import datetime
 import pickle
+import mysql.connector
+import sshtunnel
+
+sshtunnel.SSH_TIMEOUT = 5.0
+sshtunnel.TUNNEL_TIMEOUT = 5.0
+
+
+# import sys 
+# sys.path.insert(1, '/Users/Bharat/Desktop/fire pra')
+
+# import blog.models
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--webcam', help="True/False", default=False)
@@ -18,9 +29,17 @@ args = parser.parse_args()
 cctvs = {
     '1': {
         'location': 'G. Noida',
+        'pincode': '201310',
+        'lat': '1',
+        'long': '1'
+    },
+    '2': {
+        'location': 'Delhi',
+        'pincode': '100001',
         'lat': '1',
         'long': '1'
     }
+    
 }
 
 def imShow_s(path):
@@ -341,7 +360,6 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img, cctv_id):
                 try:
                     f = open('__init__/cache.dat','rb')
                     try:
-                        obj = pickle.load(f)
                         while True:
                             obj = pickle.load(f)
                     except EOFError:
@@ -367,7 +385,22 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img, cctv_id):
                     # f.write(str(now)+' | '+'\n')
                     # f.write(str(current_time)+' | '+'\n')
                     f.close()
-
+                try:
+                    with sshtunnel.SSHTunnelForwarder(
+                        ('username01.pythonanywhere.com'),
+                        ssh_username='username01', ssh_password='hiboiz12',
+                        remote_bind_address=('username01.pythonanywhere.com', 3306)
+                    ) as tunnel:
+                        connection = mysql.connector.connect(
+                            user='user', password='hiboiz12',
+                            host='127.0.0.1', port=tunnel.local_bind_port,
+                            database='Post',
+                        )
+                        obj = FireDetect(cctv_id, now, current_time)
+                        mysql.connector.push(obj.id, obj.date, obj.location, cctvs[obj.id]['lat'], cctvs[obj.id]['long'])
+                        connection.close()
+                except:
+                    pass
 	img=cv2.resize(img, (800,600))
 	cv2.imshow("Image", img)
 
@@ -383,8 +416,8 @@ def image_detect(img_path):
 			break
 
 def webcam_detect(cctv_id):
-    print(cctv_id)
-    print(cctvs[cctv_id]['location'])
+    # print(cctv_id)
+    # print(cctvs[cctv_id]['location'])
     model, classes, colors, output_layers = load_yolo()
     cap = start_webcam()
     while True:
@@ -416,6 +449,9 @@ def start_video(video_path):
 	cap.release()
 
 if __name__ == '__main__':
+    # x = Post()
+    # x.location = 'abcd'
+    # print(x.location)
     webcam = args.webcam
     video_play = args.show_demo
     image = args.image
