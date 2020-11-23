@@ -28,16 +28,16 @@ args = parser.parse_args()
 
 cctvs = {
     '1': {
-        'location': 'G. Noida',
-        'pincode': '201310',
-        'lat': '1',
-        'long': '1'
+        'location': 'West Rajiv Nagar, Sector 6, Gurgaon, Haryana 122006',
+        'pincode': '122006',
+        'lat': '28.463958',
+        'long': '77.033327'
     },
     '2': {
-        'location': 'Delhi',
-        'pincode': '100001',
-        'lat': '1',
-        'long': '1'
+        'location': 'Kirti Nagar, Sector 15 Part 1, Sector 15, Gurugram, Haryana 122022',
+        'pincode': '122022',
+        'lat': '28.449759',
+        'long': '77.034588'
     }
     
 }
