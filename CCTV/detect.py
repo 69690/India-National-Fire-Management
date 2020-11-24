@@ -190,7 +190,7 @@ def algo_s():
             connflag=1
             if((datetime.now().minute-t2)>30):
                     t2=datetime.now().minute
-                    msg = "FIRE DETECTED by CV - CCTV Camera !\n\n\nNOTE: This auto system generated mail on disconnection of computer vision camera";
+                    msg = "FIRE DETECTED by CV - CCTV Camera !\n\n\nNOTE: This auto system generated mail on disconnection of computer vision camera"
                     alertfun(msg)# send mail
             #mail as well
         ret, img = cap.read()
@@ -386,7 +386,7 @@ def draw_labels(boxes, confs, colors, class_ids, classes, img, cctv_id):
                 try:
                     with sshtunnel.SSHTunnelForwarder(
                         ('username01.pythonanywhere.com'),
-                        ssh_username='username01', ssh_password='hiboiz12',
+                        ssh_username='user', ssh_password='hiboiz12',
                         remote_bind_address=('username01.pythonanywhere.com', 3306)
                     ) as tunnel:
                         connection = mysql.connector.connect(
