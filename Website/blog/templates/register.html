@@ -1,0 +1,94 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+
+    <hr id="navhr">
+
+    {% if messages %}
+    {% for message in messages %}
+    <script>M.toast({ html: "{{message}}", displayLength: 2000 });</script>
+    {% endfor %}
+    {% endif %}
+
+    <div class="container mt-2 m-auto">
+
+        <div class="shadow-lg p-3 mt-5 mb-5 rounded" style="background-color: rgba(255, 255, 255, 0.5);">
+            <p class="lead">
+            <div class="container d-flex justify-content-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <br>
+                    <br>
+                    <button type="submit" style="border: 3px solid black; color: black;">Register</button>
+                </form>
+            </div>
+
+            <div class="row d-flex justify-content-center mt-3">
+                If you already have an account, <a href="/login"> <strong> Login </strong> </a>.
+            </div>
+            <div class="row d-flex justify-content-center">
+                <a href="/"><button class="mt-3 mb-5" style="border: 3px solid black; color: black;">Back</button></a>
+                </p>
+            </div>
+            <!-- <div class="shadow-lg p-3 mt-5 mb-5 rounded d-flex justify-content-center">
+            <p class="lead" style="font-size: 250%; font-weight: bolder;"></p>
+            <div class="col  p-3 mt-5 mb-5 rounded">
+                <div class="row d-flex justify-content-center">
+                    <a href="/register"><button class="mt-5"
+                            style="font-size: 150%; font-weight: bolder;">Register</button></a>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <a href="/login"><button class="mt-5 mb-5"
+                            style="font-size: 150%; font-weight: bolder;">Login</button></a>
+                </div>
+            </div>
+        </div> -->
+
+
+
+        </div>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="col">
+                    <div class="row d-inline float-left mt-3">
+                        <p class="lead">
+                            Bharat Ahuja
+                        </p>
+                    </div>
+                    <div class="row d-inline float-right mt-3">
+                        <p class="lead">
+                            ba8365@bennett.edu.in
+                        </p>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

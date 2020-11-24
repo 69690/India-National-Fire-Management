@@ -1,0 +1,277 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Fire</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ifvisible/1.0.6/ifvisible.js"
+        integrity="sha512-3PA+86AoEIS/cyGZ+3DNA+WBWUYt/6fE7x5IWaysUkVk4veMG8KgQ524jZSInv+MONL3UFD6kX3SC7MsUYB5OA=="
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript"> -->
+    <script type="text/javascript">
+
+        // function d(el) {
+        //     return document.getElementById(el);
+        // }
+        // ifvisible.setIdleDuration(30);
+
+        // window.onbeforeunload = function() { 
+        //     console.log("YES");
+        // };
+
+        // var firstView = false;
+        var onBeforeUnLoadEvent = false;
+        var firstView = true;
+
+        window.onunload = window.onbeforeunload = function () {
+            if (!onBeforeUnLoadEvent) {
+                onBeforeUnLoadEvent = true;
+                //your code here
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/viewpostdecrement/{{ post.pk }}/",
+                        data: {
+                            // post_id: catid
+                        },
+                        success: function (data) {
+                            // console.log("working");
+                            // console.log(data);
+                            $('#now_viewing').text(': ' + data);
+                        }
+                    }
+                )
+            }
+
+        };
+
+
+
+
+        // ifvisible.idle(function () {
+        //     d("result2").innerHTML = "(-_-) Good bye. ZzzZZzz...";
+        //     document.body.style.opacity = 0.5;
+        // });
+
+        // ifvisible.wakeup(function () {
+        //     d("result2").innerHTML = "(O_o) Hey!, you woke me up.";
+        //     document.body.style.opacity = 1;
+        // });
+
+
+
+        ifvisible.on('status Changed', function (e) {
+            if (firstView === false && ifvisible.now() === false) {
+                firstView = true;
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/viewpostdecrement/{{ post.pk }}/",
+                        data: {
+                            // post_id: catid
+                        },
+                        success: function (data) {
+                            // console.log("working");
+                            // console.log("SUBTRACT");
+                            // console.log(data);
+                            $('#now_viewing').text(': ' + data);
+                        }
+                    }
+                )
+            }
+        });
+
+        ifvisible.onEvery(0.05, function () {
+            if (ifvisible.now() === true && firstView === true) {
+                firstView = false;
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/viewpost/{{ post.pk }}/",
+                        data: {
+                            // post_id: catid
+                        },
+                        success: function (data) {
+                            // console.log("ADD");
+                            // console.log(data);
+                            $('#now_viewing').text(': ' + data);
+                        }
+                    }
+                )
+            }
+            else if (firstView === false && ifvisible.now() === false) {
+                firstView = true;
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "/viewpostdecrement/{{ post.pk }}/",
+                        data: {
+                            // post_id: catid
+                        },
+                        success: function (data) {
+                            // console.log("working");
+                            // console.log("SUBTRACT");
+                            // console.log(data);
+                            $('#now_viewing').text(': ' + data);
+                        }
+                    }
+                )
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/getcount1/{{ post.pk }}/",
+                data: {},
+                success: function (data) {
+                    // console.log("VALUE CHANGED - Currently Reading");
+                    $('#now_viewing').text(': ' + data);
+                }
+            })
+
+            $.ajax({
+                type: "GET",
+                url: "/getcount2/{{ post.pk }}/",
+                data: {},
+                success: function (data) {
+                    // console.log("VALUE CHANGED - Total Read Count");
+                    $('#total_count').text(': ' + data);
+                }
+            })
+        });
+
+        // setInterval(function () {
+        //     var info = ifvisible.getIdleInfo();
+        //     // Give 3% margin to stabilaze user output
+        //     if (info.timeLeftPer < 3) {
+        //         info.timeLeftPer = 0;
+        //         info.timeLeft = ifvisible.getIdleDuration();
+        //     }
+        //     d("seconds").innerHTML = parseInt(info.timeLeft / 1000), 10;
+        //     d("idlebar").style.width = info.timeLeftPer + '%';
+        // }, 100);
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="navbar-brand" href="/home">Fire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/home">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="/about">About <span class="sr-only">(current)</span></a>
+                <!-- <a class="nav-item ml-auto nav-link" href="#">Logout</a> -->
+                <!-- <a class="nav-item nav-link" href="#">About Us</a> -->
+            </div>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-item nav-link active">{{ user }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <hr id="navhr">
+
+    <div class="container mt-2">
+        {% block content %}
+        <div class="post">
+            {% if post.published_date %}
+            <div class="lead mt-4">
+                {{ post.published_date }}
+                <div class="stats d-inline float-right mr-3">
+                    <i class="d-inline float-left p-2 fa fa-book fa-2x"></i>
+                    <div class="d-inline pr-2 stats-txt" id="total_count"></div>
+                </div>
+                <div class="stats d-inline float-right mr-3">
+                    <i class="d-inline float-left p-2 fa fa-eye fa-2x"></i>
+                    <div class="d-inline pr-2 stats-txt" id="now_viewing"></div>
+                </div>
+            </div>
+
+            {% endif %}
+            <h1 class="mt-2 mb-3">{{ post.title }}</h1>
+            <div class="shadow-lg p-3 mb-5 rounded">
+                <!-- <p class="lead">{{ post.text|linebreaksbr }}</p> -->
+                <div class="row">
+                    <div class="col-3">
+                        <img src="https://img.icons8.com/bubbles/2x/fire-element.png" alt="thumbnail" class="img-thumbnail"
+                        style="width: 200px">
+                    </div>
+                    <div class="col-6">
+                        <p class="lead">Location: {{ post.location }}</p>
+                        <p class="lead">Date & Time: {{ post.published_date }}</p>
+                        <p class="lead">Pincode: {{ post.pincode }}</p>
+                        <p class="lead">Google Maps: <a href="https://www.google.com/maps/search/?api=1&query={{post.lat}},{{post.long}}&zoom=21" target="_blank"><button class="mb-5">View</button></a></p>
+                    </div>
+                    <div class="col-3">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="{% url 'delete_post' pk=post.pk %}"><button class="mb-5">Responded</button></a>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+        {% endblock %}
+
+
+
+        <a href="/home"><button class="mb-5">Back</button></a>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="col">
+                <div class="row d-inline float-left mt-3">
+                    <p class="lead">
+                        Bharat Ahuja
+                    </p>
+                </div>
+                <div class="row d-inline float-right mt-3">
+                    <p class="lead">
+                        ba8365@bennett.edu.in
+                    </p>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ifvisible/1.0.6/ifvisible.js"
+        integrity="sha512-3PA+86AoEIS/cyGZ+3DNA+WBWUYt/6fE7x5IWaysUkVk4veMG8KgQ524jZSInv+MONL3UFD6kX3SC7MsUYB5OA=="
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
