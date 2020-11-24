@@ -28,7 +28,7 @@ args = parser.parse_args()
 
 cctvs = {
     '1': {
-        'location': 'West Rajiv Nagar, Sector 6, Gurgaon, Haryana 122006',
+        'location': 'West Rajiv Nagar, Sector 6, Gurugram, Haryana 122006',
         'pincode': '122006',
         'lat': '28.463958',
         'long': '77.033327'
